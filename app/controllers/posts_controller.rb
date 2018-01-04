@@ -13,10 +13,10 @@ class PostsController < ApplicationController
   end
 
   def create
-    @post = Post.new(post_params)
-    if @post.save
+    @post = current_user.posts.create(post_params)
+    if @post
       flash[:success] = "Post was successfuly saved"
-      rediect_to root_path
+      redirect_to current_user
     else
       render :new
     end
@@ -28,7 +28,7 @@ class PostsController < ApplicationController
   def update
     if @post.update(post_params)
       flash[:success] = "Post was successfuly updated"
-      rediect_to root_path
+      redirect_to current_user
     else
       render :edit
     end
@@ -37,15 +37,15 @@ class PostsController < ApplicationController
   def destroy
     @post.destroy
     flash[:success] = "Post was successfuly deleted"
-    rediect_to root_path
+    redirect_to current_user
   end
 
   private
     def set_post
-      @hall = Hall.find(params[:id])
+      @post = Post.find(params[:id])
     end
 
     def post_params
-      params.permit(:description, :name, :user_id)
+      params.require(:post).permit(:description, :title, :user_id)
     end
 end
