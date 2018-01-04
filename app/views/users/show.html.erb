@@ -29,6 +29,11 @@
               </div>
             </div>
           </div>
+          <h3>Comments</h3>
+            <%= render post.comments %>
+          <div class="comment">
+            <%= render partial: 'comments/form', locals: {post: post} %>
+          </div>
         </div>
       <% end %>
     </div>

@@ -1,0 +1,7 @@
+<span class="user"><%=link_to comment.user.name, comment.user %></span>
+<span class="content"><%=comment.body %></span>
+<span class="timestamp">Posted <%= comment.created_at %> ago.</span> <br />
+<% if comment.user == current_user %>
+<%= link_to 'Edit', edit_post_comment_path(comment.post, comment) %>
+ <%= link_to 'Delete', post_comment_path(comment.post, comment), method: :delete, data: { confirm: 'Are you sure?'} %><br/><hr >
+ <% end %>

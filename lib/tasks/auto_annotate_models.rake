@@ -27,7 +27,7 @@ if Rails.env.development?
       'exclude_factories'         => 'false',
       'exclude_serializers'       => 'false',
       'exclude_scaffolds'         => 'false',
-      'exclude_controllers'       => 'false',
+      'exclude_controllers'       => 'true',
       'exclude_helpers'           => 'true',
       'exclude_sti_subclasses'    => 'false',
       'ignore_model_sub_dir'      => 'false',
