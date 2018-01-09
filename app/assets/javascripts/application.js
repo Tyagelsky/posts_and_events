@@ -15,3 +15,39 @@
 //= require twitter/bootstrap
 //= require turbolinks
 //= require_tree .
+
+function showForm(commentId) {
+  event.preventDefault();
+
+  $('.hide_form.' + commentId).toggle();
+}
+
+function deleteComment(commentId) {
+  event.preventDefault();
+
+  $.ajax({
+    url: '/comments/' + commentId,
+    method: 'DELETE',
+    success: function() {
+      $('.nested_comment.' + commentId).fadeOut();
+    },
+    error: function() {
+      alert('error')
+    }
+  })
+}
+
+function editComment(commentId) {
+  event.preventDefault();
+
+  $.ajax({
+    url: '/comments/' + commentId + '/edit',
+    method: 'GET',
+    success: function(response) {
+      alert(response.body)
+    },
+    error: function() {
+      alert('error')
+    }
+  })
+}

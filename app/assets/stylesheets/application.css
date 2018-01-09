@@ -14,3 +14,11 @@
  *= require_tree .
  *= require_self
  */
+
+.nested_comment {
+  padding-left: 20px
+}
+
+.hide_form {
+  display: none;
+}

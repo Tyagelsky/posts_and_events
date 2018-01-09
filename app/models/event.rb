@@ -1,20 +1,22 @@
 # == Schema Information
 #
-# Table name: posts
+# Table name: events
 #
 #  id          :integer          not null, primary key
 #  title       :string
 #  description :string
+#  start_time  :datetime
+#  end_time    :datetime
 #  user_id     :integer
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
 #
 # Indexes
 #
-#  index_posts_on_user_id  (user_id)
+#  index_events_on_user_id  (user_id)
 #
 
-class Post < ApplicationRecord
+class Event < ApplicationRecord
   validates :title, :description, presence: true
 
   belongs_to :user

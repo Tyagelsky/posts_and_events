@@ -18,7 +18,7 @@ class PostsController < ApplicationController
   before_action :set_post, only: [:show, :update, :destroy, :edit]
 
   def index
-    @posts = Post.all
+    @posts = Post.all.order(created_at: :desc)
   end
 
   def show
@@ -32,7 +32,7 @@ class PostsController < ApplicationController
     @post = current_user.posts.create(post_params)
     if @post
       flash[:success] = "Post was successfuly saved"
-      redirect_to current_user
+      redirect_to posts_path
     else
       render :new
     end
@@ -44,7 +44,7 @@ class PostsController < ApplicationController
   def update
     if @post.update(post_params)
       flash[:success] = "Post was successfuly updated"
-      redirect_to current_user
+      redirect_to @post
     else
       render :edit
     end
@@ -53,7 +53,7 @@ class PostsController < ApplicationController
   def destroy
     @post.destroy
     flash[:success] = "Post was successfuly deleted"
-    redirect_to current_user
+    redirect_to posts_path
   end
 
   private

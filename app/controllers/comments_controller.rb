@@ -16,27 +16,35 @@
 #
 
 class CommentsController < ApplicationController
-  before_action :find_post, only: [:create, :edit, :update, :destroy]
-  before_action :find_comment, only: [:edit, :update, :destroy]
+  # before_action :find_post, only: [:edit, :update, :destroy]
 
   def create
-    @comment = @post.comments.build(comments_params)
-    @comment.user_id = current_user.id
-    if @comment.save
+    comment = Comment.new(comments_params)
+    comment.user = current_user
+    if comment.save
       flash[:success] = "Comment was created"
-      redirect_to user_path(@post.user)
+      if root_post_for(comment) == Post
+        redirect_to post_path(root_post_for(comment))
+      else
+        redirect_to event_path(root_post_for(comment))
+      end
     else
-      flash[:notice] = "Something was wrong"
+      flash[:error] = "Something was wrong"
     end
   end
 
   def edit
+    @comment = Comment.second
+    byebug
+
+    render partial: 'comments/form', locals: { new_comment: @comment, resource: @comment.commentable }
   end
 
   def update
+    @comment = Comment.find(params[:id])
     if @comment.update(comments_params)
       flash[:success] = "Comment was updated"
-      redirect_to user_path(@post.user)
+      redirect_to post_path(root_post_for(comment))
     else
       flash[:notice] = "Something was wrong"
       render :edit
@@ -44,12 +52,17 @@ class CommentsController < ApplicationController
   end
 
   def destroy
-    @comment.destroy
-    flash[:success] = "Comment was successfuly deleted"
-    redirect_to user_path(@post.user)
+    @comment = Comment.find(params[:id])
+    head :no_content if @comment.destroy
   end
 
   private
+
+  def root_post_for(resource)
+    parent = resource.commentable
+    return parent if parent.class.eql?(Post) || parent.class.eql?(Event)
+    root_post_for(parent)
+  end
 
   def find_post
     @post = Post.find(params[:post_id])
@@ -60,6 +73,6 @@ class CommentsController < ApplicationController
   end
 
   def comments_params
-    params.require(:comment).permit(:body)
+    params.require(:comment).permit(:body, :commentable_type, :commentable_id)
   end
 end

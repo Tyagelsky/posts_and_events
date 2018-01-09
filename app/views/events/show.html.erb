@@ -1,0 +1,35 @@
+<div class="row center">
+  <div class="col-xs-8 col-xs-offset-2">
+    <div class="well well-lg">
+      <div class="title">
+        <h3><%= @event.title %></h3>
+      </div>
+      <div class="description">
+        <p><%= @event.description %></p>
+      </div>
+      <div class="start_time">
+        <p>Start date: <%= @event.start_time %></p>
+      </div>
+      <div class="end_time">
+        <p>Finish date: <%= @event.end_time %></p>
+      </div>
+      <div class="event-actions">
+        <% if (user_signed_in? && @event.user == current_user)  %>
+          <%= link_to "Edit event", edit_event_path(@event),
+                                   class: "btn btn-xs btn-success" %>
+          <%= link_to "Delete event", event_path(@event),
+                                     method: :delete,
+                                     data: {confirm: "Are you sure?"},
+                                     class: "btn btn-xs btn-danger" %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+  <div class="comment_form">
+    <%= render partial: 'comments/form', locals: {
+      resource: @event, new_comment: Comment.new
+      } %>
+  </div>
+  <h3>Comments</h3>
+  <%= render @event.comments %>
+</div>

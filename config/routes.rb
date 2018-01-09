@@ -3,7 +3,16 @@ Rails.application.routes.draw do
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   root to: "home#home"
   resources :users, only: [:index, :show]
+
   resources :posts do
-    resources :comments   
+    resources :comments, only: [:create]
+  end
+
+  resources :comments, only: [:edit, :update, :destroy] do
+    resources :comments, only: [:create]
+  end
+
+  resources :events do
+    resources :comments, only: [:create]
   end
 end

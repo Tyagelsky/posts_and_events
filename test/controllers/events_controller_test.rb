@@ -1,22 +1,25 @@
 # == Schema Information
 #
-# Table name: posts
+# Table name: events
 #
 #  id          :integer          not null, primary key
 #  title       :string
 #  description :string
+#  start_time  :datetime
+#  end_time    :datetime
 #  user_id     :integer
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
 #
 # Indexes
 #
-#  index_posts_on_user_id  (user_id)
+#  index_events_on_user_id  (user_id)
 #
 
-class Post < ApplicationRecord
-  validates :title, :description, presence: true
+require 'test_helper'
 
-  belongs_to :user
-  has_many :comments, as: :commentable, dependent: :destroy
+class EventsControllerTest < ActionDispatch::IntegrationTest
+  # test "the truth" do
+  #   assert true
+  # end
 end
