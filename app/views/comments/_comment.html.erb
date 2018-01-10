@@ -1,13 +1,13 @@
 <div class="nested_comment <%= comment.id %>">
-  <span class="user"><%=link_to comment.user.name, comment.user %></span>
-  <span class="content"><%=comment.body %></span>
-  <span class="timestamp">Posted <%= comment.created_at %> ago.</span> <br />
+  <span class="user"><%=link_to comment.user.name, comment.user %>: </span>
+  <span class="content"><i><%=comment.body.capitalize %></i></span><br />
+  <span class="timestamp">Posted: <%= comment.created_at %> ago.</span> <br />
   <% if comment.user == current_user %>
     <a href='#' onclick='editComment(<%= comment.id %>)'>Edit</a>
     <a href='#' onclick='deleteComment(<%= comment.id %>)'>Delete</a>
+  <% end %>    
     <a href='#' onclick='showForm(<%= comment.id %>)'>Reply</a>
     <br/><hr >
-  <% end %>
   <div class="comment_form">
     <%= render partial: 'comments/form', locals: {
       resource: comment, new_comment: Comment.new

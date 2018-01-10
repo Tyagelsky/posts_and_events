@@ -34,10 +34,9 @@ class CommentsController < ApplicationController
   end
 
   def edit
-    @comment = Comment.second
-    byebug
-
-    render partial: 'comments/form', locals: { new_comment: @comment, resource: @comment.commentable }
+    @comment = Comment.find(params[:id])
+    render partial: 'comments/form', locals: { new_comment: @comment,
+                                               resource: @comment.commentable }
   end
 
   def update

@@ -28,8 +28,8 @@ function deleteComment(commentId) {
   $.ajax({
     url: '/comments/' + commentId,
     method: 'DELETE',
-    success: function() {
-      $('.nested_comment.' + commentId).fadeOut();
+    success: function(response) {
+      alert(response.body)
     },
     error: function() {
       alert('error')
@@ -43,8 +43,8 @@ function editComment(commentId) {
   $.ajax({
     url: '/comments/' + commentId + '/edit',
     method: 'GET',
-    success: function(response) {
-      alert(response.body)
+    success: function() {
+      $('.hide_form.' + commentId).html("<%= escape_javascript(render partial: 'comments/form') %>")
     },
     error: function() {
       alert('error')

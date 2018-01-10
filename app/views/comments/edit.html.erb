@@ -1,7 +1,10 @@
-<h1>Edit comment</h1>
-<%= form_for @comment, url: post_comment_path({post_id: @post.id})  do |f| %>
-  <div class="field">
-    <%= f.text_area :body %>
-  </div>
-  <%= f.submit "OK", class: "btn btn-large btn-primary" %>
-<% end %>
+<div class='<%= hide_form_for(resource)%>'>
+  <%= form_for([resource, new_comment])  do |f| %>
+      <div class="field">
+        <%= f.hidden_field :commentable_type, value: resource.class %>
+        <%= f.hidden_field :commentable_id, value: resource.id %>
+        <%= f.text_area :body, placeholder: "New comment.." %>
+      </div>
+    <%= f.submit "OK", class: "btn btn-success" %>
+  <% end %>
+</div>
