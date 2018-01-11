@@ -39,7 +39,7 @@ function deleteComment(commentId) {
 
 function editComment(commentId) {
   event.preventDefault();
-  const current_function = this;
+  var current_function = this;
   if(!current_function.isOpen) {
   $.ajax({
     url: '/comments/' + commentId + '/edit',
