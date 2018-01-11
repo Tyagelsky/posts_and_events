@@ -13,11 +13,12 @@ class EventsController < ApplicationController
   end
 
   def create
-    @event = current_user.events.create(event_params)
-    if @event
+    @event = current_user.events.new(event_params)
+    if @event.save
       flash[:success] = "Event was successfuly saved"
       redirect_to events_path
     else
+      flash[:error] = "Something was wrong"
       render :new
     end
   end
@@ -30,6 +31,7 @@ class EventsController < ApplicationController
       flash[:success] = "Event was successfuly updated"
       redirect_to @event
     else
+      flash[:error] = "Something was wrong"      
       render :edit
     end
   end

@@ -1,10 +1,8 @@
-<div class='<%= hide_form_for(resource)%>'>
-  <%= form_for([resource, new_comment])  do |f| %>
-      <div class="field">
-        <%= f.hidden_field :commentable_type, value: resource.class %>
-        <%= f.hidden_field :commentable_id, value: resource.id %>
-        <%= f.text_area :body, placeholder: "New comment.." %>
-      </div>
-    <%= f.submit "OK", class: "btn btn-success" %>
-  <% end %>
-</div>
+<%= form_for([resource, comment])  do |f| %>
+    <div class="field">
+      <%= f.hidden_field :commentable_type, value: resource.class %>
+      <%= f.hidden_field :commentable_id, value: resource.id %>
+      <%= f.text_area :body, placeholder: "Fill comment.." %>
+    </div>
+  <%= f.submit "OK", class: "btn btn-success" %>
+<% end %>

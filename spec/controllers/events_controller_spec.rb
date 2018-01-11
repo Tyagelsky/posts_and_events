@@ -75,11 +75,5 @@ RSpec.describe EventsController, type: :controller do
         delete :destroy, params: {id: event.id}
       }.to change(Event, :count).by(-1)
     end
-
-    it "return the 200 status-code" do
-      event = @user.events.create! valid_attributes
-      delete :destroy, params: {id: event.id}
-      expect(response.status).to eq(200)
-    end
   end
 end

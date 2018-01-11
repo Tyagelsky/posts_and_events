@@ -28,8 +28,8 @@ function deleteComment(commentId) {
   $.ajax({
     url: '/comments/' + commentId,
     method: 'DELETE',
-    success: function(response) {
-      alert(response.body)
+    success: function() {
+      $('.nested_comment.' + commentId).fadeOut();
     },
     error: function() {
       alert('error')
@@ -39,15 +39,18 @@ function deleteComment(commentId) {
 
 function editComment(commentId) {
   event.preventDefault();
-
+  const current_function = this;
+  if(!current_function.isOpen) {
   $.ajax({
     url: '/comments/' + commentId + '/edit',
     method: 'GET',
-    success: function() {
-      $('.hide_form.' + commentId).html("<%= escape_javascript(render partial: 'comments/form') %>")
+    success: function(response) {
+      $('.edit-form' + commentId).html(response)
     },
     error: function() {
       alert('error')
     }
   })
+}
+  current_function.isOpen = true
 }

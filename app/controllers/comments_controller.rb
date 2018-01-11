@@ -1,33 +1,10 @@
-# == Schema Information
-#
-# Table name: comments
-#
-#  id         :integer          not null, primary key
-#  body       :text
-#  post_id    :integer
-#  user_id    :integer
-#  created_at :datetime         not null
-#  updated_at :datetime         not null
-#
-# Indexes
-#
-#  index_comments_on_post_id  (post_id)
-#  index_comments_on_user_id  (user_id)
-#
-
 class CommentsController < ApplicationController
-  # before_action :find_post, only: [:edit, :update, :destroy]
-
   def create
     comment = Comment.new(comments_params)
     comment.user = current_user
     if comment.save
       flash[:success] = "Comment was created"
-      if root_post_for(comment) == Post
-        redirect_to post_path(root_post_for(comment))
-      else
-        redirect_to event_path(root_post_for(comment))
-      end
+      right_redirect(comment)
     else
       flash[:error] = "Something was wrong"
     end
@@ -35,15 +12,15 @@ class CommentsController < ApplicationController
 
   def edit
     @comment = Comment.find(params[:id])
-    render partial: 'comments/form', locals: { new_comment: @comment,
-                                               resource: @comment.commentable }
+    render partial: 'comments/form', locals: { resource: @comment.commentable,
+                                               comment: @comment}
   end
 
   def update
     @comment = Comment.find(params[:id])
     if @comment.update(comments_params)
       flash[:success] = "Comment was updated"
-      redirect_to post_path(root_post_for(comment))
+      right_redirect(@comment)
     else
       flash[:notice] = "Something was wrong"
       render :edit
@@ -63,12 +40,12 @@ class CommentsController < ApplicationController
     root_post_for(parent)
   end
 
-  def find_post
-    @post = Post.find(params[:post_id])
-  end
-
-  def find_comment
-    @comment = @post.comments.find(params[:id])
+  def right_redirect(comment)
+    if root_post_for(comment).class == Post
+      redirect_to post_path(root_post_for(comment))
+    else
+      redirect_to event_path(root_post_for(comment))
+    end
   end
 
   def comments_params

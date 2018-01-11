@@ -1,19 +1,3 @@
-# == Schema Information
-#
-# Table name: posts
-#
-#  id          :integer          not null, primary key
-#  title       :string
-#  description :string
-#  user_id     :integer
-#  created_at  :datetime         not null
-#  updated_at  :datetime         not null
-#
-# Indexes
-#
-#  index_posts_on_user_id  (user_id)
-#
-
 class PostsController < ApplicationController
   before_action :set_post, only: [:show, :update, :destroy, :edit]
 
@@ -29,11 +13,12 @@ class PostsController < ApplicationController
   end
 
   def create
-    @post = current_user.posts.create(post_params)
-    if @post
+    @post = current_user.posts.new(post_params)
+    if @post.save
       flash[:success] = "Post was successfuly saved"
       redirect_to posts_path
     else
+      flash[:error] = "Something was wrong"
       render :new
     end
   end
@@ -46,6 +31,7 @@ class PostsController < ApplicationController
       flash[:success] = "Post was successfuly updated"
       redirect_to @post
     else
+      flash[:error] = "Something was wrong"
       render :edit
     end
   end

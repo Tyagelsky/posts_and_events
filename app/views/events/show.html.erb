@@ -27,8 +27,7 @@
   </div>
   <div class="comment_form">
     <%= render partial: 'comments/form', locals: {
-      resource: @event, new_comment: Comment.new
-      } %>
+      resource: @event, comment: Comment.new } %>
   </div>
   <h3>Comments</h3>
   <%= render @event.comments %>
