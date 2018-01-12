@@ -13,6 +13,7 @@ gem 'pg', '~> 0.18'
 gem 'devise'
 gem 'twitter-bootstrap-rails'
 gem 'devise-bootstrap-views'
+gem 'will_paginate'
 # Use Puma as the app server
 gem 'puma', '~> 3.0'
 # Use SCSS for stylesheets

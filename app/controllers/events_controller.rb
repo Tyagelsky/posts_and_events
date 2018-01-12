@@ -2,7 +2,8 @@ class EventsController < ApplicationController
   before_action :set_event, only: [:show, :update, :destroy, :edit]
 
   def index
-    @events = Event.all.order(created_at: :desc)
+    @events = Event.order(created_at: :desc).paginate(page: params[:page],
+                                                  per_page: 5)
   end
 
   def show
@@ -31,7 +32,7 @@ class EventsController < ApplicationController
       flash[:success] = "Event was successfuly updated"
       redirect_to @event
     else
-      flash[:error] = "Something was wrong"      
+      flash[:error] = "Something was wrong"
       render :edit
     end
   end

@@ -1,29 +1,33 @@
-<h1 align="center"> All events: </h1>
-<div align="center">
-  <% if user_signed_in? %>
-    <%= link_to "New event", new_event_path, class: "btn btn-md btn-success" %>
-  <% end %><hr>
-</div>
-  <% @events.each do |event| %>
-    <div class="row center">
-      <div class="col-xs-8 col-xs-offset-2">
-        <div class="well well-lg">
-          <div class="titleforpost">
-            <%= link_to event.title.capitalize, event_path(event) %>
-          </div>
-          <div class="description">
-            <i><%= truncate(event.description.capitalize , length: 100) %></i>
-          </div>
-          <div class="author">
-            Author: <%= event.user.name %>
-          </div>
-          <div class="start_time">
-            Start: <%= event.start_time %>
-          </div>
-          <div class="end_time">
-            End: <%= event.end_time %>
+<div class="container">
+  <h1 align="center"> All events: </h1>
+  <div align="center">
+    <% if user_signed_in? %>
+      <%= link_to "New event", new_event_path, class: "btn btn-md btn-success" %>
+    <% end %><hr>
+  </div>
+    <div align="center"><%= will_paginate @events%></div>
+      <% @events.each do |event| %>
+        <div class="row center">
+          <div class="col-xs-8 col-xs-offset-2">
+            <div class="well well-lg">
+              <div class="titleforpost">
+                <%= link_to event.title.capitalize, event_path(event) %>
+              </div>
+              <div class="description">
+                <i><%= truncate(event.description.capitalize , length: 100) %></i>
+              </div>
+              <div class="author">
+                Author: <%= event.user.name %>
+              </div>
+              <div class="start_time">
+                Start: <%= event.start_time %>
+              </div>
+              <div class="end_time">
+                End: <%= event.end_time %>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
-  <% end %>
+      <% end %>
+    <div align="center"><%= will_paginate @events%></div>
+</div>

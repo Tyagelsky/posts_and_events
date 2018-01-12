@@ -1,23 +1,27 @@
-<h1 align="center"> All posts: </h1>
-<div align="center">
-  <% if user_signed_in? %>
-    <%= link_to "New post", new_post_path, class: "btn btn-md btn-success" %>
-  <% end %><hr>
-</div>
-  <% @posts.each do |post| %>
-    <div class="row center">
-      <div class="col-xs-8 col-xs-offset-2">
-        <div class="well well-lg">
-          <div class="titleforpost">
-            <%= link_to post.title.capitalize, post_path(post) %>
-          </div>
-          <div class="description">
-            <i><%= truncate(post.description.capitalize , length: 100) %></i>
-          </div>
-          <div class="author">
-            Author: <%= post.user.name %>
+<div class="container">
+  <h1 align="center"> All posts: </h1>
+  <div align="center">
+    <% if user_signed_in? %>
+      <%= link_to "New post", new_post_path, class: "btn btn-md btn-success" %>
+    <% end %><hr>
+  </div>
+    <div align="center"><%= will_paginate @posts%></div>
+      <% @posts.each do |post| %>
+        <div class="row center">
+          <div class="col-xs-8 col-xs-offset-2">
+            <div class="well well-lg">
+              <div class="titleforpost">
+                <%= link_to post.title.capitalize, post_path(post) %>
+              </div>
+              <div class="description">
+                <i><%= truncate(post.description.capitalize , length: 100) %></i>
+              </div>
+              <div class="author">
+                Author: <%= post.user.name %>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
-  <% end %>
+      <% end %>
+    <div align="center"><%= will_paginate @posts%></div>
+</div>
